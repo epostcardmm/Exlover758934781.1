@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story ✨</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* 🌟 Sky Blue Gradient Background 🌟 */
+            background: linear-gradient(135deg, #0284c7 0%, #38bdf8 50%, #bae6fd 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        /* 🌟 3:4 Aspect Ratio Fixed Frame (Sky Blue Theme Card) 🌟 */
+        .container {
+            text-align: center;
+            background: #ffffff;
+            padding: 20px 15px;
+            border-radius: 36px;
+            box-shadow: 0 25px 50px rgba(2, 132, 199, 0.3);
+            border: 3px solid #0ea5e9;
+            
+            width: 320px;
+            height: 460px;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .step {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .step.active {
+            display: flex;
+        }
+
+        /* 🌟 Much Larger & Clear Headings 🌟 */
+        h2 {
+            color: #0369a1;
+            font-size: 19px;
+            margin: 0;
+            line-height: 1.4;
+            font-weight: 700;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 🌟 Larger GIF Frame Size 🌟 */
+        .gif-container img {
+            width: 175px;
+            height: 175px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.25);
+            margin: auto 0;
+        }
+
+        /* 🌟 Fixed Button Group 🌟 */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            height: 70px;
+            box-sizing: border-box;
+        }
+        
+        /* 🌟 Larger Buttons & Bigger Font Sizes 🌟 */
+        button {
+            height: 54px;
+            width: 130px;
+            font-size: 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
+            box-sizing: border-box;
+            padding: 0 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Main Button: Bright Sky Blue Gradient */
+        .btn-main {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            box-shadow: 0 6px 0 #0369a1, 0 10px 20px rgba(14, 165, 233, 0.4);
+        }
+        .btn-main:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #0369a1, 0 4px 8px rgba(14, 165, 233, 0.4);
+        }
+
+        /* Sub Button: Royal Blue Gradient */
+        .btn-sub {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            box-shadow: 0 6px 0 #1e40af, 0 10px 20px rgba(59, 130, 246, 0.4);
+        }
+        .btn-sub:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #1e40af, 0 4px 8px rgba(59, 130, 246, 0.4);
+        }
+
+        /* 🌟 Running Button Style 🌟 */
+        .running-btn {
+            position: absolute !important;
+            transition: left 0.15s ease, top 0.15s ease !important;
+            z-index: 99;
+        }
+
+        #final-card {
+            background: #f0f9ff;
+            padding: 10px;
+            border-radius: 24px;
+            border: 2px dashed #0ea5e9;
+            width: 100%;
+            height: 335px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .youtube-container {
+            width: 100%;
+            height: 190px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .youtube-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* 🌟 Floating No-Frame GIF 🌟 */
+        .floating-gif {
+            display: none;
+            position: absolute;
+            top: -100px;
+            width: 90px;
+            height: 90px;
+            cursor: pointer;
+            z-index: 100;
+            animation: floatDown 3s forwards ease-out;
+        }
+
+        .floating-gif img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+
+        @keyframes floatDown {
+            0% { top: -100px; transform: translateX(0) rotate(0deg); }
+            50% { transform: translateX(35px) rotate(15deg); }
+            100% { top: 150px; transform: translateX(-15px) rotate(-10deg); }
+        }
+
+        /* 🌟 Floating Letter / Note Modal 🌟 */
+        .letter-modal {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 132, 199, 0.5);
+            border-radius: 36px;
+            justify-content: center;
+            align-items: center;
+            z-index: 101;
+            backdrop-filter: blur(3px);
+        }
+
+        .letter-paper {
+            background: #ffffff;
+            width: 88%;
+            padding: 24px 18px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+            border: 2px solid #0ea5e9;
+            text-align: center;
+            position: relative;
+            animation: popIn 0.3s ease-out forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .letter-paper h3 {
+            margin: 0 0 12px 0;
+            color: #0369a1;
+            font-size: 19px;
+        }
+
+        /* 🌟 Larger & Clear Letter Text 🌟 */
+        .letter-paper p {
+            color: #334155;
+            font-size: 14px;
+            line-height: 1.7;
+            margin: 0 0 18px 0;
+            text-align: justify;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 9px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #0369a1;
+            width: auto;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="main-container">
+
+    <!-- 🌟 Floating Heart / Letter GIF 🌟 -->
+    <div id="floating-gif" class="floating-gif" onclick="openLetter()">
+        <img src="https://i.ibb.co/8DF0jfY8/no-bg-env.png" alt="Letter GIF">
+    </div>
+
+    <!-- 🌟 Letter / Note Modal 🌟 -->
+    <div id="letter-modal" class="letter-modal">
+        <div class="letter-paper">
+            <h3>💌 To My Special One</h3>
+            <p>
+                ဒီ E-postcard လေးကို ဖွင့်ကြည့်ပေးလို့ ကျေးဇူးပါနော်... ✨<br><br>
+                တို့နှစ်ယောက်ကြားမှာ အခက်အခဲတွေ ရှိခဲ့ရင်တောင်မှ အစကနေ ပြန်စပြီး လက်တွဲသွားချင်ပါသေးတယ်။<br>
+                အမြဲတမ်း ဂရုစိုက်ပေးမှာမို့လို့ ကိုယ့်အနားမှာပဲ ဆက်ရှိပေးပါနော်။ ❤️
+            </p>
+            <button class="close-btn" onclick="closeLetter()">Close✨</button>
+        </div>
+    </div>
+
+    <div id="step1" class="step active">
+        <div class="gif-container">
+            <img src="https://media.tenor.com/nA5iSpAftHAAAAAi/bubu-dudu.gif">
+        </div>
+        <h2>ဟိတ်... ရည်းစားဟောင်းလေး<br>ပြန်မချစ်ကြည့်ချင်ဘူးလား?🥺</h2>
+        <div class="btn-group">
+            <button id="s1-b1" class="btn-main" onclick="sendChoice('Step 1', 'Yes🥰', noCounts.step1); nextStep(2)">Yes 🥰</button>
+            <button id="s1-b2" class="btn-sub" onclick="noCounts.step1++; shrinkAndGrow()">No😭</button>
+        </div>
+    </div>
+
+    <div id="step2" class="step">
+        <div class="gif-container">
+            <img src="https://media.tenor.com/Lgr_6-nkvnUAAAAi/casal-dudu.gif">
+        </div>
+        <h2 id="step2-text">သတိမရဘူးလား?✨</h2>
+        <div class="btn-group">
+            <button id="s2-b1" class="btn-main" onclick="sendChoice('Step 2', 'Yes🌙', noCounts.step2); nextStep(3)">Yes🌙</button>
+            <button id="s2-b2" class="btn-sub" onclick="noCounts.step2++; complainMemory()">No🙄</button>
+        </div>
+    </div>
+
+    <div id="step3" class="step">
+        <div class="gif-container">
+            <img src="https://media.tenor.com/2Jl1X7xa6UYAAAAi/bubu-dudu-eyes.gif">
+        </div>
+        <h2>ပြန်ချစ်ကြမယ်လေနော်နော်..🧸</h2>
+        <div class="btn-group" id="s3-group">
+            <button id="s3-b1" class="btn-sub" onclick="noCounts.step3++; swapButtons()">No</button>
+            <button id="s3-b2" class="btn-main" onclick="sendChoice('Step 3', 'Yes💖', noCounts.step3); nextStep(4)">Yes💖</button>
+        </div>
+    </div>
+
+    <div id="step4" class="step">
+        <div class="gif-container">
+            <img src="https://media.tenor.com/mKr-KcMW9RcAAAAi/cute-bears.gif">
+        </div>
+        <h2 id="step4-text">အတည်ပြန်တွဲကြမယ်လေ<br>ပြန်လက်ခံပေးပါနော်?💗</h2>
+        <div class="btn-group">
+            <button class="btn-main" onclick="sendChoice('Step 4', 'Yes🚀', noCounts.step4); nextStep(5)">Yes🚀</button>
+            <button id="s4-b2" class="btn-sub" onmouseover="runAwayButton()" ontouchstart="runAwayButton()" onclick="runAwayButton()">No✋</button>
+        </div>
+    </div>
+
+    <!-- 🌟 Step 5: Epostcard For You Button & YouTube Video 🌟 -->
+    <div id="step5" class="step">
+        <div id="final-card">
+            <h2 style="color: #0369a1; font-size: 17px; height: auto; margin: 0;">We Are Back! 💖</h2>
+            <div class="youtube-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/DqA1pxk4yhQ?si=ueqJYWl-qaEs23bZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>            </div>
+            <p style="color: #334155; font-size: 12px; font-weight: bold; margin: 0;">
+                အစကပြန်စခွင့်ပေးလို့ ကျေးဇူးပါ။ ချစ်တယ်နော်... 🌹
+            </p>
+        </div>
+        <button class="btn-main" style="width: 100%; height: 48px; margin-top: 5px; border-radius: 24px; font-size: 15px;" onclick="sendChoice('Final', 'Epostcard For You 💌'); triggerEpostcard()">💌 Epostcard For You</button>
+    </div>
+</div>
+
+<script>
+    const FORMSPREE_URL = "";
+
+    let noCounts = {
+        step1: 0,
+        step2: 0,
+        step3: 0,
+        step4: 0
+    };
+
+    function sendChoice(stepName, choiceText, noCount = null) {
+        let payload = {
+            step: stepName,
+            response: choiceText,
+            timestamp: new Date().toLocaleString()
+        };
+
+        if (noCount !== null) {
+            payload.noClicksBeforeYes = noCount;
+        }
+
+        fetch(FORMSPREE_URL, {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        }).then(response => {
+            if (response.ok) {
+                console.log("Response sent to Gmail successfully!");
+            }
+        }).catch(error => {
+            console.error("Error sending response:", error);
+        });
+    }
+
+    let b1Scale = 1;
+    let b2Scale = 1;
+    let isSwapped = false;
+
+    function nextStep(stepNumber) {
+        document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+        document.getElementById('step' + stepNumber).classList.add('active');
+    }
+
+    function triggerEpostcard() {
+        const gif = document.getElementById('floating-gif');
+        gif.style.display = 'block';
+        gif.style.animation = 'none';
+        gif.offsetHeight; 
+        gif.style.animation = 'floatDown 3s forwards ease-out';
+    }
+
+    function openLetter() {
+        sendChoice('Epostcard', 'Postcard လေး ဖွင့်ကြည့်ပြီးပါပြီ 💌');
+        document.getElementById('letter-modal').style.display = 'flex';
+    }
+
+    function closeLetter() {
+        document.getElementById('letter-modal').style.display = 'none';
+    }
+
+    function shrinkAndGrow() {
+        if(b1Scale < 1.4) b1Scale += 0.1;
+        if(b2Scale > 0.5) b2Scale -= 0.1;
+        
+        const b1 = document.getElementById('s1-b1');
+        const b2 = document.getElementById('s1-b2');
+        b1.style.transform = `scale(${b1Scale})`;
+        b2.style.transform = `scale(${b2Scale})`;
+        if (b2Scale <= 0.5) {
+            b2.style.opacity = '0';
+            b2.style.pointerEvents = 'none';
+        }
+    }
+
+    function complainMemory() {
+        document.getElementById('step2-text').innerHTML = "တကယ်တော့<br>သတိရနေတာမလား 🥺";
+        const b2 = document.getElementById('s2-b2');
+        b2.style.opacity = '0';
+        b2.style.pointerEvents = 'none';
+    }
+
+    function swapButtons() {
+        const group = document.getElementById('s3-group');
+        const b1 = document.getElementById('s3-b1');
+        const b2 = document.getElementById('s3-b2');
+        
+        if (!isSwapped) {
+            group.insertBefore(b2, b1);
+            isSwapped = true;
+        } else {
+            group.insertBefore(b1, b2);
+            isSwapped = false;
+        }
+    }
+
+    function runAwayButton() {
+        noCounts.step4++;
+        const btn = document.getElementById('s4-b2');
+        const container = document.getElementById('main-container');
+        
+        if (!btn.classList.contains('running-btn')) {
+            btn.classList.add('running-btn');
+        }
+        
+        const maxX = container.clientWidth - btn.offsetWidth - 15; 
+        const maxY = container.clientHeight - btn.offsetHeight - 15;
+        
+        const randomX = Math.floor(Math.random() * maxX) + 10;
+        const randomY = Math.floor(Math.random() * maxY) + 10;
+        
+        btn.style.left = randomX + 'px';
+        btn.style.top = randomY + 'px';
+    }
+</script>
+
+</body>
+</html>
